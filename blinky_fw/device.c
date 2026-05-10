@@ -25,7 +25,7 @@
 #include "usb_cdc.h"
 #include "shell.h"
 
-#define T1_INTERVAL     100
+#define T1_INTERVAL     200
 
 #define SYNCDELAY() SYNCDELAY4
 
@@ -39,8 +39,6 @@
 #define CDC_SET_LINE_CODING         0x20
 #define CDC_GET_LINE_CODING         0x21
 #define CDC_SET_CONTROL_LINE_STATE  0x22
-
-static 
 
 ////////////////////////////////////////////////////////////////////////////////
 //
