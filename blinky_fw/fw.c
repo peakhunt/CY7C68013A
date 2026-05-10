@@ -66,10 +66,10 @@ main(void)
   // iic files (c2 load) don't need to renumerate/delay
   // trm 3.6
   // with hex file, it seems to be working without RENUMERATE too.
-//#define NORENUM 1
+#define NORENUM 1
 #ifndef NORENUM
-  //RENUMERATE();
-  RENUMERATE_UNCOND();
+  RENUMERATE();
+  //RENUMERATE_UNCOND();
 #else
   USBCS &= ~bmDISCON;
 #endif
