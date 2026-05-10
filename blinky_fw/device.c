@@ -156,6 +156,7 @@ handle_usb_cdc_setup_data_cmd(BYTE cmd)
 
 volatile WORD t1 = 0;
 volatile WORD ms_count = 0;
+volatile BOOL d2_led = FALSE;
 volatile uint32_t uptime_sec;
 
 uint32_t
@@ -178,6 +179,7 @@ timer0_isr(void) __interrupt (TF0_ISR)
   {
     uptime_sec++;
     ms_count = 0;
+    d2_led = !d2_led;
   }
 
   TH0 = 0xF0;
@@ -319,12 +321,13 @@ main_init(void)
 void
 main_loop(void)
 {
-  static uint16_t cnt = 0;
   cdc_handle_rx();
-  cnt++;
-  if(cnt > 32000)
+  if(d2_led)
   {
-    cnt = 0;
     IOA ^= 0x02;
+  }
+  else
+  {
+    IOA |= 0x02;
   }
 }
