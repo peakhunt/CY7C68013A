@@ -5,7 +5,7 @@ It is an interesting old technology based on ancient 8051 core and powerful USB 
 ## to build
 first install the following packages  
   
-sudo apt-get install sdcc cycfx2prog  
+sudo apt install sdcc cycfx2prog  
 sudo apt install fxload  
 
 then
