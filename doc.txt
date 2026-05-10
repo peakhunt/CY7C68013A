@@ -1,0 +1,28 @@
+a) AT24C128
+   A2 = A1 = A0 = GND, 0x50 
+                       0x51
+                       ...
+
+b) CY7C68013A EEPROM load address
+   0x51 (0xC2 boot)   Large EEPROMs
+   0x50 (0xC0 boot)   Small EEPROMs
+
+   BROM tries small eeprom address first
+   if it fails, it tries large eeprom
+
+
+c) FX2LP Blue Chinese board
+   1) the board uses FT24C128A. It's cheaper but ok
+   2) A0 pin is pulled up to 3V3 via 10K resistor. No Jumper = 3V3 = 0x51
+   3) Jumper is used to connect A0 pin to GND.
+
+d) EEPROM flashing with large eeprom (fx2lp chinese board)
+  it has 16KB large eeprom. keep the address 
+
+e) large address config byte
+  0xC0: Only loads VID/PID/DID (works at 0x50 or 0x51).
+  0xC2: Loads full firmware (must be at 0x51 for large chips).
+
+f) how to flash
+  1. adjust the jumper. make it impossible to load firmware if there is any 
+  2. load firmware by executing make command

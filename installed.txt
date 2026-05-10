@@ -1,0 +1,2 @@
+sudo apt-get install sdcc cycfx2prog
+sudo apt install fxload
