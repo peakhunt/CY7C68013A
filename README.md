@@ -18,6 +18,6 @@ then
 You might have to wrestle with EEPROM A0 jumper on the board.  
 In my case, A0 is pulled up to 3V3 via 10K resistor by default, which makes sense since EEPOM is a large one.  
 And the jumper actually connects A0 pin to GND.  
-But most documents in the internet says the opposite.  
+But most documents in the internet say the opposite.  
   
 And SDCC is not that bad.  
