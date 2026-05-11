@@ -302,6 +302,7 @@ report_button_inputs(void)
   }
 }
 
+#if 1
 __xdata RingBuffer _rb;
 
 static void
@@ -338,6 +339,16 @@ check_control_outputs(void)
   {
     count = MAKEWORD(EP2BCH,EP2BCL);
 
+    if((count % 9) != 0)
+    {
+      // something I don't understand happened
+      while(1)
+      {
+        for(int i = 0; i < 15000; i++);
+        IOA ^= 0x02;
+      }
+    }
+
     for(uint16_t i = 0; i < count; i++)
     {
       rb_push(&_rb, EP2FIFOBUF[i]);
@@ -348,6 +359,49 @@ check_control_outputs(void)
     process_control_outputs();
   }
 }
+#else
+static void
+check_control_outputs(void)
+{
+  uint16_t count;
+  uint8_t leds;
+  uint8_t segs[8];
+
+  if(!(EP2468STAT & bmEP2EMPTY))
+  {
+    count = MAKEWORD(EP2BCH,EP2BCL);
+
+    if((count % 9) != 0)
+    {
+      // something I don't understand happened
+      while(1)
+      {
+        delay(50);
+        IOA ^= 0x02;
+      }
+    }
+
+    while(count > 0)
+    {
+      leds = *EP2FIFOBUF;
+      segs[0] = *EP2FIFOBUF;
+      segs[1] = *EP2FIFOBUF;
+      segs[2] = *EP2FIFOBUF;
+      segs[3] = *EP2FIFOBUF;
+      segs[4] = *EP2FIFOBUF;
+      segs[5] = *EP2FIFOBUF;
+      segs[6] = *EP2FIFOBUF;
+      segs[7] = *EP2FIFOBUF;
+      count -= 9;
+      tm1638_set_leds(leds);
+      tm1638_set_segments(segs);
+    }
+
+    EP2BCL = 0x80;
+    SYNCDELAY();
+  }
+}
+#endif
 
 void
 main_loop(void)
