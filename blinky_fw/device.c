@@ -322,7 +322,7 @@ main_loop(void)
   cdc_handle_rx();
   if(d2_led)
   {
-    IOA ^= 0x02;
+    IOA &= ~0x02;
   }
   else
   {
