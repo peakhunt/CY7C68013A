@@ -15,7 +15,7 @@ typedef struct
 static inline uint8_t
 rb_available(RingBuffer *rb)
 {
-    return (uint8_t)(rb->head - rb->tail) & (RING_BUFFER_SIZE - 1);
+  return (uint8_t)(rb->head - rb->tail) & (RING_BUFFER_SIZE - 1);
 }
 
 // b) Adds new data
