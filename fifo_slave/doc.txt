@@ -1,0 +1,12 @@
+CYCLONE10LP
+  10CL006YE144C8G
+
+  1V2 Power Regulator for Core
+  2V5 Power Regulator for PLL
+  3V3 Power for I/O and etc.
+
+  Then Power for each I/O banks ???
+
+  25016JVNIQ WINBOND flash
+
+  WCH 340 USB UART

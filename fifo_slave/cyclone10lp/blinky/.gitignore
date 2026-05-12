@@ -1,0 +1,36 @@
+# =========================================================================
+# 1. Quartus Compilation & Internal DB Folders (NEVER COMMIT THESE)
+# =========================================================================
+db/
+incremental_db/
+hc_output/
+greybox_tmp/
+simulation/
+timing/
+output_files/
+qsf_backups/
+
+# =========================================================================
+# 2. Cryptic Temporary Run Files
+# =========================================================================
+*.done
+*.rpt
+*.summary
+*.pin
+*.sof
+*.pof
+*.jdi
+*.sld
+*.qws
+*.bak
+*.orig
+*.chg
+*.log
+
+# =========================================================================
+# 3. ModelSim / Questa Sim Temporary Objects
+# =========================================================================
+transcript
+vsim.wlf
+work/
+msim_transcript
