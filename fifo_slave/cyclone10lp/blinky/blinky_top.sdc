@@ -1,5 +1,5 @@
 # =========================================================================
-# 1. Primary Clock Definition (50 MHz Entry Core on Pin 91)
+# 1. Primary Clock Definition (50 MHz Input Core on Pin 91)
 # =========================================================================
 create_clock -name {clk_50} -period 20.000 [get_ports {clk_50}]
 
@@ -10,19 +10,18 @@ derive_pll_clocks
 derive_clock_uncertainty
 
 # =========================================================================
-# 3. Clock Domain Crossing (CDC) Boundary Isolation (MBS CLASS FIXED)
+# 3. Clock Domain Crossing (CDC) Boundary Isolation
 # =========================================================================
-# This cuts the timing paths between your 100MHz logic engine and 48MHz bus
-#set_clock_groups -asynchronous \
-#    -group [get_clocks {pll_inst|altpll_component|auto_generated|pll1|clk[0]}] \
-#    -group [get_clocks {pll_inst|altpll_component|auto_generated|pll1|clk[1]}]
+# Cuts timing paths crossing between your 50MHz crystal clock and 100MHz logic core
+set_clock_groups -asynchronous \
+    -group [get_clocks {clk_50}] \
+    -group [get_clocks {pll_inst|altpll_component|auto_generated|pll1|clk[0]}]
 
 # =========================================================================
-# 4. Asynchronous Path Masking & I/O Delays
+# 4. Asynchronous Path Masking & LED Pins Isolation
 # =========================================================================
+# Ignore timing requirements on the asynchronous reset input pin
 set_false_path -from [get_ports {rst_n}] -to *
 
-# Output delays are now correctly bound to the 100 MHz logic clock (clk[0]) 
-# that drives your toggler registers.
-set_output_delay -clock {pll_inst|altpll_component|auto_generated|pll1|clk[0]} -max 5.000 [get_ports {leds[*]}]
-set_output_delay -clock {pll_inst|altpll_component|auto_generated|pll1|clk[0]} -min -1.000 [get_ports {leds[*]}]
+# Tell Quartus that LED toggling speed does not need nanosecond-level optimization
+set_false_path -to [get_ports {leds[*]}]

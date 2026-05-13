@@ -17,7 +17,6 @@ architecture arch of blinky_top is
   port (
     inclk0 : in  std_logic := '0';
     c0     : out std_logic;        -- 50 MHz Internal Logic Clock
-    c1     : out std_logic;        -- 48 MHz FX2LP Internal Reference Clock
     locked : out std_logic         -- High when frequencies are completely stable
   );
   end component sys_pll;
@@ -61,7 +60,6 @@ architecture arch of blinky_top is
 
   -- PLL Generated Internal Clock Rails
   signal clk_internal_100 : std_logic;
-  -- signal clk_fx2_sync_48  : std_logic;
   signal w_pll_locked     : std_logic;
 
   -- Reset Interconnect
@@ -77,7 +75,6 @@ begin
   port map (
     inclk0 => clk_50,
     c0     => clk_internal_100,
-    c1     => open,
     locked => w_pll_locked
   );
 
