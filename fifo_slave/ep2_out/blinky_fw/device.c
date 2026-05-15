@@ -190,11 +190,9 @@ void main_init(void)
   FIFOPINPOLAR = 0x00;
   SYNCDELAY();
 
-  // XXX
-  // without this, a strange shit happens
   // 
-  EP2FIFOCFG = 0x00;
-  SYNCDELAY();
+  //EP2FIFOCFG = 0x00;
+  //SYNCDELAY();
 
   EP2FIFOCFG = 0x10; // EP2 AUTOOUT=0, AUTOIN=0, ZEROLEN=0, WORDWIDE=0
   SYNCDELAY();
