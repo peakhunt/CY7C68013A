@@ -170,6 +170,9 @@ void main_init(void)
   FIFOPINPOLAR = 0x00;
   SYNCDELAY();
 
+  // XXX
+  // without this, a strange shit happens
+  // 
   EP2FIFOCFG = 0x00;
   SYNCDELAY();
 
