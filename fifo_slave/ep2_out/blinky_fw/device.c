@@ -122,6 +122,26 @@ handle_vendorcommand(BYTE cmd)
 //********************  INIT ***********************
 void main_init(void)
 {
+  /////////////////////////////////////////////////////////////////////////
+  //
+  // XXX
+  // On my blue chinese FX2LP board
+  // RDY0/RDY1 pins are mislabled.
+  // RDY0 pin is labled as RDY1 and vice versa.
+  // At least that was my case.
+  // Test your board with multimeter if you don't wanna waste
+  // several days wondering why
+  //
+  // CTRL0 : flag
+  // RDY0(RDY1 pin on my chinese board) : slrd
+  // PA02   : slor
+  // PA0[4|5]: FIFOADDR[0|1]
+  // PB0-7 : data0-7
+  // IFCLK : IFCLK
+  // 
+  // hope I remembered all these correctly.
+  //
+  /////////////////////////////////////////////////////////////////////////
   REVCTL = 0x03;
   SYNCDELAY();
 
