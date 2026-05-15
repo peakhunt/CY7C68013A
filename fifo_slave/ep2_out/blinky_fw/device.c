@@ -19,6 +19,7 @@
 #include <fx2macros.h>
 #include <fx2regs.h>
 #include <fx2ints.h>
+#include <eputils.h>
 #include <delay.h>
 #include <stdint.h>
 
@@ -32,22 +33,8 @@
 #define printf(...)
 #endif
 
-volatile WORD t1 = 0;
-volatile WORD ms_count = 0;
-volatile BOOL d2_led = FALSE;
-volatile uint32_t uptime_sec;
-
-uint32_t
-get_uptime(void)
-{
-    uint32_t temp;
-
-    ET0 = 0;           // Mask Timer 0 only
-    temp = uptime_sec; // Fast 32-bit copy
-    ET0 = 1;           // Unmask immediately
-                       //
-    return temp;
-}
+WORD t1 = 0;
+WORD ms_count = 0;
 
 void
 timer0_isr(void) __interrupt (TF0_ISR)
@@ -55,9 +42,7 @@ timer0_isr(void) __interrupt (TF0_ISR)
   ms_count++;
   if(ms_count >= 1000)
   {
-    uptime_sec++;
     ms_count = 0;
-    d2_led = !d2_led;
   }
 
   TH0 = 0xF0;
@@ -87,10 +72,12 @@ handle_get_descriptor(void)
 BOOL
 handle_get_interface(BYTE ifc, BYTE* alt_ifc)
 {
-  (void)ifc;
-  (void)alt_ifc;
-  // *alt_ifc=alt;
-  return TRUE;
+  if(ifc == 0)
+  {
+     *alt_ifc=ifc;
+     return TRUE;
+  }
+  return FALSE;
 }
 
 // return TRUE if you set the interface requested
@@ -99,12 +86,7 @@ handle_get_interface(BYTE ifc, BYTE* alt_ifc)
 BOOL
 handle_set_interface(BYTE ifc,BYTE alt_ifc)
 {  
-  (void)ifc;
-  (void)alt_ifc;
-  printf ( "Set Interface.\n" );
-  //interface=ifc;
-  //alt=alt_ifc;
-  return TRUE;
+	return ifc == 0 && alt_ifc == 0;
 }
 
 // handle getting and setting the configuration
@@ -138,56 +120,85 @@ handle_vendorcommand(BYTE cmd)
 }
 
 //********************  INIT ***********************
-void
-main_init(void)
+void main_init(void)
 {
-  REVCTL=3;
+  REVCTL = 0x03;
   SYNCDELAY();
-  SETIF48MHZ();
 
-  // Lock EP2 as a valid Bulk-OUT endpoint
-  // 0xA2 = Endpoint Active, OUT direction, Bulk type, 512 bytes, Quad-buffered
-  EP2CFG = 0xA2; 
+  // Force the layout pins to Slave FIFO Mode and drive the clock out
+  IFCONFIG = 0xe3; 
+  SYNCDELAY();
+
+  PINFLAGSAB = 0x08; // FLAGA = EP2 EF
+  SYNCDELAY();
+
+  PORTACFG |= 0x80;    // flagd. no nCS
+
+  EP1INCFG &= ~bmVALID;
+	SYNCDELAY();
+
+	EP1OUTCFG &= ~bmVALID;
+	SYNCDELAY();
+
+  EP2CFG = 0xa2;    // EP2 OUT, Bulk, 512, 2x
   SYNCDELAY();                    
 
-  // Turn on AUTOOUT mode for the 8-bit bus
-  // 0x10 = AUTOOUT enabled (bypasses 8052 CPU), 8-bit data bus width (WORDWIDE=0)
-  EP2FIFOCFG = 0x10;            
+  EP4CFG = 0x02;
+	SYNCDELAY();
+
+  EP6CFG = 0x02;
+	SYNCDELAY();
+
+  EP8CFG = 0x02;
+	SYNCDELAY();
+
+  // reset fifo
+  FIFORESET = 0x80; // Activate NAK-ALL to mask the USB bus
+  SYNCDELAY();
+  FIFORESET = 0x02; // Force hardware reset on FIFO 2
+  SYNCDELAY();
+  FIFORESET = 0x00; // Release NAK-ALL
   SYNCDELAY();
 
-  // Bind FLAGA strictly to EP2 Empty status
-  // 0x00 = FLAGA drops LOW when EP2 is completely empty, snaps HIGH when data arrives
-  PINFLAGSAB = 0x00; 
+  // arm both EP2 buffers to prim the pump
+  OUTPKTEND = 0x82;
+  SYNCDELAY();
+  OUTPKTEND = 0x82;
   SYNCDELAY();
 
-  // Invert FLAGA polarity to make it Active High 
-  // (Bit 0 = 1 makes FLAGA High on Data Ready, Low on Empty)
-  FIFOPINPOLAR = 0x01; 
+  // Bind and lock pin polarities
+  FIFOPINPOLAR = 0x00;
   SYNCDELAY();
 
-  //
-  // setup led and timer for blinking
-  // 
+  EP2FIFOCFG = 0x00;
+  SYNCDELAY();
+
+  EP2FIFOCFG = 0x10; // EP2 AUTOOUT=0, AUTOIN=0, ZEROLEN=0, WORDWIDE=0
+  SYNCDELAY();
+
   OEA = 0x03;
-  TMOD = 0x01; // Timer 0, Mode 1 (16-bit)
 
+  TMOD = 0x01; // Timer 0, Mode 1 (16-bit)
+    
   // Set 1ms reload value (0xf060)
   TH0 = 0xf0;
   TL0 = 0x60;
   ENABLE_TIMER0();
   TR0 = 1; // Start Timer 0
-           // interrupts are enabled later in main
+  // interrupts are enabled later in main
 }
 
 void
 main_loop(void)
 {
-  if(d2_led)
+  // to see fifo status on LED
+  if(EP2FIFOFLGS & 0x02)
   {
-    IOA &= ~0x02;
+    // fifo empty flag
+    IOA |= 0x02;
   }
   else
   {
-    IOA |= 0x02;
+    IOA &= ~0x02;
   }
 }

@@ -61,7 +61,7 @@ _highspd_dscr:
  .db 1                                                    ; config number
  .db 0                                                    ; config string
  .db 0x80                                                 ; attrs = bus powered, no wakeup
- .db 0x32                                                 ; max power = 100ma
+ .db 0x64                                                 ; max power = 200ma
 highspd_dscr_end:
   ;; --- INTERFACE 0: Vendor Data Class ---
   .db DSCR_INTERFACE_LEN

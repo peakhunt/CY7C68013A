@@ -47,7 +47,7 @@ main(void)
                        // main_init can still set this to whatever you want.
   sio0_init(57600); // needed for printf if debug defined 
 #else
-  SETCPUFREQ(CLK_48M); 
+  SETCPUFREQ(CLK_48M);
 #endif
 
   main_init();
