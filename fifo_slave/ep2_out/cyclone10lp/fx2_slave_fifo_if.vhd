@@ -18,23 +18,24 @@ port (
 end entity fx2_slave_fifo_if;
 
 architecture rtl of fx2_slave_fifo_if is
+--  signal flaga_internal: std_logic := '0';
 begin
 
-  -- 1. Persistent Output Enable Activation
-  -- For a dedicated read-only data sink, we pull Slave Output Enable (SLOE) 
-  -- low permanently to keep the FX2LP internal pin output drivers continuously active.
   fx2_sloe <= '0';
-
-  -- 2. Immediate Asynchronous Bypass Read Logic
-  -- Since the FX2LP is in AUTOOUT mode, the data on the bus pins remains valid
-  -- for the duration of the ready flag window. We assert the Active-Low Slave 
-  -- Read (SLRD) strobe immediately whenever the active-high FLAGA goes high.
   fx2_slrd <= not fx2_flaga;
-
-  -- 3. Direct Clock Domain Signal Mapping
-  -- We route the physical parallel data bus and the ready strobe straight into 
-  -- your internal FIFO write ports to safely handle the 48 MHz clock window.
   pipe_wdata <= fx2_fd;
   pipe_wrreq <= fx2_flaga;
+ 
+--  process(fx2_ifclk)
+--  begin
+--    if rising_edge(fx2_ifclk) then
+--      flaga_internal <= fx2_flaga;
+--    end if;
+--  end process;
+--
+--  fx2_slrd <= not flaga_internal;
+--  fx2_sloe <= not flaga_internal;
+--  pipe_wdata <= fx2_fd;
+--  pipe_wrreq <= flaga_internal;
 
 end architecture rtl;

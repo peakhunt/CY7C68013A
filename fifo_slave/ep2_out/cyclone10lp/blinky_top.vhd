@@ -41,7 +41,7 @@ architecture arch of blinky_top is
   end component fx2_slave_fifo_if;
 
   component mbs_dcfifo_bridge IS
-  PORT (
+  port (
     aclr    : IN  STD_LOGIC := '0';
     data    : IN  STD_LOGIC_VECTOR (7 DOWNTO 0);
     rdclk   : IN  STD_LOGIC ;
@@ -51,14 +51,7 @@ architecture arch of blinky_top is
     q       : OUT STD_LOGIC_VECTOR (7 DOWNTO 0);
     rdempty : OUT STD_LOGIC 
   );
-  END component mbs_dcfifo_bridge;
-
-  -- internal pure signals
-  signal w_sync_rst_n : std_logic;
-  signal w_overflow1  : std_logic;
-  signal w_overflow2  : std_logic;
-  signal w_overflow3  : std_logic;
-  signal w_overflow4  : std_logic;
+  end component mbs_dcfifo_bridge;
 
   -- PLL Generated Internal Clock Rails
   signal clk_sys_100      : std_logic;
@@ -74,11 +67,6 @@ architecture arch of blinky_top is
   signal w_fifo_rdreq    : std_logic;
   signal w_fifo_empty    : std_logic;
   signal r_data_register : std_logic_vector(7 downto 0) := (others => '0');
-
-  constant T_100 : unsigned(25 downto 0) := to_unsigned(10000000, 26);
-  constant T_200 : unsigned(25 downto 0) := to_unsigned(20000000, 26);
-  constant T_300 : unsigned(25 downto 0) := to_unsigned(30000000, 26);
-  constant T_400 : unsigned(25 downto 0) := to_unsigned(40000000, 26);
 begin
 
   pll_inst : sys_pll
@@ -125,6 +113,24 @@ begin
   -- =========================================================================
   -- LINK 3 (100 MHz Domain): Pure Synchronous Internal Core Data Capture
   -- =========================================================================
+--  process(clk_sys_100)
+--  begin
+--    if rising_edge(clk_sys_100) then
+--      if w_master_clear = '1' then
+--        w_fifo_rdreq    <= '0';
+--        r_data_register <= (others => '0');
+--      else
+--        -- High-speed data harvester loop inside the FPGA core logic
+--        if w_fifo_empty = '0' and w_fifo_rdreq = '0' then
+--          w_fifo_rdreq <= '1'; -- Pull the strobe for 1 cycle to pop the byte
+--        elsif w_fifo_rdreq = '1' then
+--          w_fifo_rdreq    <= '0';               -- De-assert read request instantly
+--          r_data_register <= w_fifo_rdata;      -- Latch the stable byte into the register
+--        end if;
+--      end if;
+--    end if;
+--  end process;
+
   process(clk_sys_100)
   begin
     if rising_edge(clk_sys_100) then
@@ -132,12 +138,11 @@ begin
         w_fifo_rdreq    <= '0';
         r_data_register <= (others => '0');
       else
-        -- High-speed data harvester loop inside the FPGA core logic
-        if w_fifo_empty = '0' and w_fifo_rdreq = '0' then
-          w_fifo_rdreq <= '1'; -- Pull the strobe for 1 cycle to pop the byte
-        elsif w_fifo_rdreq = '1' then
-          w_fifo_rdreq    <= '0';               -- De-assert read request instantly
-          r_data_register <= w_fifo_rdata;      -- Latch the stable byte into the register
+        if w_fifo_empty = '0' then
+          w_fifo_rdreq    <= '1';          -- Instantly pop the byte
+          r_data_register <= w_fifo_rdata; -- Latch the data immediately available on the bus
+        else
+          w_fifo_rdreq    <= '0';          -- Park low if empty
         end if;
       end if;
     end if;

@@ -85,8 +85,8 @@ set_global_assignment -name QIP_FILE sys_pll.qip
 set_global_assignment -name QIP_FILE mbs_dcfifo_bridge.qip
 set_location_assignment PIN_23 -to fx2_ifclk
 set_location_assignment PIN_111 -to fx2_flaga
-set_location_assignment PIN_112 -to fx2_sloe
-set_location_assignment PIN_113 -to fx2_slrd
+set_location_assignment PIN_113 -to fx2_sloe
+set_location_assignment PIN_115 -to fx2_slrd
 set_location_assignment PIN_120 -to fx2_fd[0]
 set_location_assignment PIN_124 -to fx2_fd[1]
 set_location_assignment PIN_126 -to fx2_fd[2]
