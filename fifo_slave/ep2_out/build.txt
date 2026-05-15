@@ -1,0 +1,1 @@
+gcc -O2 fx2_led_test.c -o fx2_led_test -lusb-1.0
