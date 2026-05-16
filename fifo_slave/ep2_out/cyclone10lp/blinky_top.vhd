@@ -131,6 +131,21 @@ begin
 --    end if;
 --  end process;
 
+--  process(clk_sys_100)
+--  begin
+--    if rising_edge(clk_sys_100) then
+--      if w_master_clear = '1' then
+--        w_fifo_rdreq    <= '0';
+--        r_data_register <= (others => '0');
+--      else
+--        w_fifo_rdreq    <= '0';
+--        if w_fifo_empty = '0' then
+--          w_fifo_rdreq    <= '1';
+--          r_data_register <= w_fifo_rdata;
+--        end if;
+--     end if;
+--    end if;
+--  end process;
   process(clk_sys_100)
   begin
     if rising_edge(clk_sys_100) then
@@ -138,11 +153,16 @@ begin
         w_fifo_rdreq    <= '0';
         r_data_register <= (others => '0');
       else
+        w_fifo_rdreq <= '0';
+
+        -- 1. Check empty and request the read
         if w_fifo_empty = '0' then
-          w_fifo_rdreq    <= '1';          -- Instantly pop the byte
-          r_data_register <= w_fifo_rdata; -- Latch the data immediately available on the bus
-        else
-          w_fifo_rdreq    <= '0';          -- Park low if empty
+          w_fifo_rdreq <= '1';
+        end if;
+
+        -- 2. This creates the mandatory 1-cycle delay to capture the new data safely
+        if w_fifo_rdreq = '1' then
+          r_data_register <= w_fifo_rdata;
         end if;
       end if;
     end if;

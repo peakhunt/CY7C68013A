@@ -100,17 +100,17 @@ BEGIN
 		intended_device_family => "Cyclone 10 LP",
 		lpm_hint => "RAM_BLOCK_TYPE=M9K",
 		lpm_numwords => 256,
-		lpm_showahead => "ON",
+		lpm_showahead => "OFF",
 		lpm_type => "dcfifo",
 		lpm_width => 8,
 		lpm_widthu => 8,
 		overflow_checking => "ON",
-		rdsync_delaypipe => 4,
+		rdsync_delaypipe => 5,
 		read_aclr_synch => "OFF",
 		underflow_checking => "ON",
 		use_eab => "ON",
 		write_aclr_synch => "OFF",
-		wrsync_delaypipe => 4
+		wrsync_delaypipe => 5
 	)
 	PORT MAP (
 		aclr => aclr,
@@ -141,10 +141,10 @@ END SYN;
 -- Retrieval info: PRIVATE: Full NUMERIC "1"
 -- Retrieval info: PRIVATE: INTENDED_DEVICE_FAMILY STRING "Cyclone 10 LP"
 -- Retrieval info: PRIVATE: LE_BasedFIFO NUMERIC "0"
--- Retrieval info: PRIVATE: LegacyRREQ NUMERIC "0"
+-- Retrieval info: PRIVATE: LegacyRREQ NUMERIC "1"
 -- Retrieval info: PRIVATE: MAX_DEPTH_BY_9 NUMERIC "0"
 -- Retrieval info: PRIVATE: OVERFLOW_CHECKING NUMERIC "0"
--- Retrieval info: PRIVATE: Optimize NUMERIC "0"
+-- Retrieval info: PRIVATE: Optimize NUMERIC "2"
 -- Retrieval info: PRIVATE: RAM_BLOCK_TYPE NUMERIC "2"
 -- Retrieval info: PRIVATE: SYNTH_WRAPPER_GEN_POSTFIX STRING "0"
 -- Retrieval info: PRIVATE: UNDERFLOW_CHECKING NUMERIC "0"
@@ -166,17 +166,17 @@ END SYN;
 -- Retrieval info: CONSTANT: INTENDED_DEVICE_FAMILY STRING "Cyclone 10 LP"
 -- Retrieval info: CONSTANT: LPM_HINT STRING "RAM_BLOCK_TYPE=M9K"
 -- Retrieval info: CONSTANT: LPM_NUMWORDS NUMERIC "256"
--- Retrieval info: CONSTANT: LPM_SHOWAHEAD STRING "ON"
+-- Retrieval info: CONSTANT: LPM_SHOWAHEAD STRING "OFF"
 -- Retrieval info: CONSTANT: LPM_TYPE STRING "dcfifo"
 -- Retrieval info: CONSTANT: LPM_WIDTH NUMERIC "8"
 -- Retrieval info: CONSTANT: LPM_WIDTHU NUMERIC "8"
 -- Retrieval info: CONSTANT: OVERFLOW_CHECKING STRING "ON"
--- Retrieval info: CONSTANT: RDSYNC_DELAYPIPE NUMERIC "4"
+-- Retrieval info: CONSTANT: RDSYNC_DELAYPIPE NUMERIC "5"
 -- Retrieval info: CONSTANT: READ_ACLR_SYNCH STRING "OFF"
 -- Retrieval info: CONSTANT: UNDERFLOW_CHECKING STRING "ON"
 -- Retrieval info: CONSTANT: USE_EAB STRING "ON"
 -- Retrieval info: CONSTANT: WRITE_ACLR_SYNCH STRING "OFF"
--- Retrieval info: CONSTANT: WRSYNC_DELAYPIPE NUMERIC "4"
+-- Retrieval info: CONSTANT: WRSYNC_DELAYPIPE NUMERIC "5"
 -- Retrieval info: USED_PORT: aclr 0 0 0 0 INPUT GND "aclr"
 -- Retrieval info: USED_PORT: data 0 0 8 0 INPUT NODEFVAL "data[7..0]"
 -- Retrieval info: USED_PORT: q 0 0 8 0 OUTPUT NODEFVAL "q[7..0]"
