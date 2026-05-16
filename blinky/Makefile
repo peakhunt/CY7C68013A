@@ -21,7 +21,7 @@ LOADER := ../Vendor_Ax/Vend_Ax_Eeprom.hex
 VID = 0xAAAA
 PID = 0xBBBB
 
-CONFIG_BYTES="c2 b4 04 34 12 00 00 00"
+LOADER := ../Vendor_Ax/Vend_Ax_Eeprom.hex
 
 # Targets
 all: $(TARGET).ihx
@@ -42,7 +42,7 @@ run: check_device $(TARGET).ihx
 	cycfx2prog -d=$(BUSID).$(DEVID) prg:$(TARGET).ihx run
 
 program: check_device
-	fxload -v -D $(DEVICE_PATH) -I $(TARGET).iic -c 0xc2 -s $(LOADER) -t fx2lp
+	fxload -v -D $(DEVICE_PATH) -I $(TARGET).ihx -c 0xc2 -s $(LOADER) -t fx2lp
 
 # Clean build artifacts
 clean:
