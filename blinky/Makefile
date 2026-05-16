@@ -18,11 +18,6 @@ DEVICE_PATH := /dev/bus/usb/$(BUSID)/$(DEVID)
 
 LOADER := ../Vendor_Ax/Vend_Ax_Eeprom.hex
 
-VID = 0xAAAA
-PID = 0xBBBB
-
-LOADER := ../Vendor_Ax/Vend_Ax_Eeprom.hex
-
 # Targets
 all: $(TARGET).ihx
 
