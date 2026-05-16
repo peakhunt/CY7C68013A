@@ -21,3 +21,8 @@ And the jumper actually connects A0 pin to GND.
 But most documents in the internet say the opposite.  
   
 And SDCC is not that bad.  
+
+## Something to note
+* RDY0/RDY1 pins are mislabled  
+  RDY0 is actually RDY1 and vice versa  
+  Check your board with multimeter or you might have to waste a lot of time to make slave fifo work
