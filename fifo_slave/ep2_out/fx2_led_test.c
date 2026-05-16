@@ -88,9 +88,9 @@ int main() {
 
         // 6. Execute USB Bulk Transfer (Sending 1 Byte to EP2)
         // for
-        result = libusb_bulk_transfer(dev_handle, EP2_OUT, payload, 2, &transferred, TIMEOUT_MS);
+        result = libusb_bulk_transfer(dev_handle, EP2_OUT, payload, 1, &transferred, TIMEOUT_MS);
         
-        if (result == 0 && transferred == 2) {
+        if (result == 0 && transferred == 1) {
             printf("Sent: 0x%02X (Binary: %d%d%d%d %d%d%d%d) -> Top 4 bits for LEDs: %d%d%d%d\n",
                    data_byte,
                    (data_byte >> 7) & 1, (data_byte >> 6) & 1, (data_byte >> 5) & 1, (data_byte >> 4) & 1,
