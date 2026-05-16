@@ -21,6 +21,9 @@ architecture rtl of fx2_slave_fifo_if is
 --  signal flaga_internal: std_logic := '0';
 begin
 
+  --
+  -- signals are already synchronized to fx2_ifclk
+  --
   fx2_sloe <= '0';
   fx2_slrd <= not fx2_flaga;
   pipe_wdata <= fx2_fd;

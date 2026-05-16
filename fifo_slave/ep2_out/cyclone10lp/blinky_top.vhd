@@ -113,39 +113,6 @@ begin
   -- =========================================================================
   -- LINK 3 (100 MHz Domain): Pure Synchronous Internal Core Data Capture
   -- =========================================================================
---  process(clk_sys_100)
---  begin
---    if rising_edge(clk_sys_100) then
---      if w_master_clear = '1' then
---        w_fifo_rdreq    <= '0';
---        r_data_register <= (others => '0');
---      else
---        -- High-speed data harvester loop inside the FPGA core logic
---        if w_fifo_empty = '0' and w_fifo_rdreq = '0' then
---          w_fifo_rdreq <= '1'; -- Pull the strobe for 1 cycle to pop the byte
---        elsif w_fifo_rdreq = '1' then
---          w_fifo_rdreq    <= '0';               -- De-assert read request instantly
---          r_data_register <= w_fifo_rdata;      -- Latch the stable byte into the register
---        end if;
---      end if;
---    end if;
---  end process;
-
---  process(clk_sys_100)
---  begin
---    if rising_edge(clk_sys_100) then
---      if w_master_clear = '1' then
---        w_fifo_rdreq    <= '0';
---        r_data_register <= (others => '0');
---      else
---        w_fifo_rdreq    <= '0';
---        if w_fifo_empty = '0' then
---          w_fifo_rdreq    <= '1';
---          r_data_register <= w_fifo_rdata;
---        end if;
---     end if;
---    end if;
---  end process;
   process(clk_sys_100)
   begin
     if rising_edge(clk_sys_100) then
