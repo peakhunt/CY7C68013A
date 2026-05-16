@@ -86,7 +86,7 @@ handle_get_interface(BYTE ifc, BYTE* alt_ifc)
 BOOL
 handle_set_interface(BYTE ifc,BYTE alt_ifc)
 {  
-	return ifc == 0 && alt_ifc == 0;
+  return ifc == 0 && alt_ifc == 0;
 }
 
 // handle getting and setting the configuration
@@ -155,22 +155,22 @@ void main_init(void)
   PORTACFG |= 0x80;    // flagd. no nCS
 
   EP1INCFG &= ~bmVALID;
-	SYNCDELAY();
+  SYNCDELAY();
 
-	EP1OUTCFG &= ~bmVALID;
-	SYNCDELAY();
+  EP1OUTCFG &= ~bmVALID;
+  SYNCDELAY();
 
   EP2CFG = 0xa2;    // EP2 OUT, Bulk, 512, 2x
   SYNCDELAY();                    
 
   EP4CFG = 0x02;
-	SYNCDELAY();
+  SYNCDELAY();
 
   EP6CFG = 0x02;
-	SYNCDELAY();
+  SYNCDELAY();
 
   EP8CFG = 0x02;
-	SYNCDELAY();
+  SYNCDELAY();
 
   // reset fifo
   FIFORESET = 0x80; // Activate NAK-ALL to mask the USB bus
