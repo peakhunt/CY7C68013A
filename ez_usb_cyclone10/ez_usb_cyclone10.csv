@@ -1,0 +1,4 @@
+"Reference","Qty","Value","DNP","Exclude from BOM","Exclude from Board","Footprint","Datasheet"
+"J1","1","Left","","","","Connector_PinHeader_2.54mm:PinHeader_2x10_P2.54mm_Vertical",""
+"J2","1","Right","","","","Connector_PinHeader_2.54mm:PinHeader_2x10_P2.54mm_Vertical",""
+"J4","1","Right","","","","Connector_PinHeader_2.54mm:PinHeader_2x24_P2.54mm_Vertical",""
