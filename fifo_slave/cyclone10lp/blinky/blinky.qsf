@@ -73,7 +73,6 @@ set_global_assignment -name OUTPUT_IO_TIMING_NEAR_END_VMEAS "HALF VCCIO" -fall
 set_global_assignment -name OUTPUT_IO_TIMING_FAR_END_VMEAS "HALF SIGNAL SWING" -rise
 set_global_assignment -name OUTPUT_IO_TIMING_FAR_END_VMEAS "HALF SIGNAL SWING" -fall
 set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to clk_50
-set_instance_assignment -name CURRENT_STRENGTH_NEW "MAXIMUM CURRENT" -to leds[2]
 set_global_assignment -name STRATIX_DEVICE_IO_STANDARD "3.3-V LVTTL"
 set_global_assignment -name SDC_FILE blinky_top.sdc
 set_global_assignment -name VHDL_FILE blinky_top.vhd
@@ -81,4 +80,58 @@ set_global_assignment -name VHDL_FILE counter.vhd
 set_global_assignment -name VHDL_FILE reset_sync.vhd
 set_global_assignment -name VHDL_FILE toggle.vhd
 set_global_assignment -name QIP_FILE sys_pll.qip
+set_location_assignment PIN_103 -to fx2_addr0
+set_location_assignment PIN_106 -to fx2_addr1
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to fx2_addr0
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to fx2_addr1
+set_location_assignment PIN_23 -to fx2_ifclk
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to fx2_ifclk
+set_location_assignment PIN_111 -to fx2_sloe
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to fx2_sloe
+set_location_assignment PIN_112 -to fx2_pktend
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to fx2_pktend
+set_location_assignment PIN_113 -to fx2_flaga
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to fx2_flaga
+set_location_assignment PIN_114 -to fx2_flagb
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to fx2_flagb
+set_location_assignment PIN_115 -to fx2_flagc
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to fx2_flagc
+set_location_assignment PIN_119 -to fx2_flagd
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to fx2_flagd
+set_location_assignment PIN_120 -to fx2_slrd
+set_location_assignment PIN_121 -to fx2_slwr
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to fx2_slrd
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to fx2_slwr
+set_location_assignment PIN_124 -to fx2_fd[0]
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to fx2_fd[0]
+set_location_assignment PIN_126 -to fx2_fd[1]
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to fx2_fd[1]
+set_location_assignment PIN_128 -to fx2_fd[2]
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to fx2_fd[2]
+set_location_assignment PIN_132 -to fx2_fd[3]
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to fx2_fd[3]
+set_location_assignment PIN_135 -to fx2_fd[4]
+set_location_assignment PIN_137 -to fx2_fd[5]
+set_location_assignment PIN_141 -to fx2_fd[6]
+set_location_assignment PIN_143 -to fx2_fd[7]
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to fx2_fd[4]
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to fx2_fd[5]
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to fx2_fd[6]
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to fx2_fd[7]
+set_location_assignment PIN_125 -to fx2_fd[8]
+set_location_assignment PIN_127 -to fx2_fd[9]
+set_location_assignment PIN_129 -to fx2_fd[10]
+set_location_assignment PIN_133 -to fx2_fd[11]
+set_location_assignment PIN_136 -to fx2_fd[12]
+set_location_assignment PIN_138 -to fx2_fd[13]
+set_location_assignment PIN_142 -to fx2_fd[14]
+set_location_assignment PIN_144 -to fx2_fd[15]
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to fx2_fd[15]
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to fx2_fd[14]
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to fx2_fd[13]
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to fx2_fd[12]
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to fx2_fd[11]
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to fx2_fd[10]
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to fx2_fd[9]
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to fx2_fd[8]
 set_instance_assignment -name PARTITION_HIERARCHY root_partition -to | -section_id Top

@@ -7,7 +7,26 @@ port
 (
   clk_50:     in std_logic;
   rst_n:      in std_logic;
-  leds:       out std_logic_vector(3 downto 0)
+  leds:       out std_logic_vector(3 downto 0);
+  
+  -- FX2 interface
+  fx2_ifclk: 	in  std_logic;  
+  
+  fx2_slrd:		out std_logic;
+  fx2_slwr:		out std_logic;
+  
+  fx2_sloe:		out std_logic;
+  fx2_pktend:	out std_logic;
+  
+  fx2_addr0:	out std_logic;
+  fx2_addr1:	out std_logic;
+  
+  fx2_flaga:	in  std_logic;
+  fx2_flagb:	in  std_logic;
+  fx2_flagc:	in  std_logic;
+  fx2_flagd:	in  std_logic;
+  
+  fx2_fd:		inout std_logic_vector(15 downto 0)
 );
 end blinky_top;
 
