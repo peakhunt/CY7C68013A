@@ -14,3 +14,4 @@ CYCLONE10LP
   CLK: 50Mhz Pin91 (CLK4)
   LED[0-3]: Pin98-101
   Reset Button: Pin 89. Default 3V3 Pull Up
+        buttons: 88/89/90
